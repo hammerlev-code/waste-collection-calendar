@@ -1,418 +1,436 @@
 <!doctype html>
-<html lang="p
+<html lang="pl">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#101827">
-<title>Waste Collection Calendar · Sternstraße 2026</title>
+<meta name="description" content="Kalendarz wywozu odpadów AWG Wuppertal, Sternstraße, 2026.">
+<title>Kalendarz wywozu odpadów · Sternstraße 2026</title>
 <style>
 :root {
-  --bg: #101827;
-  --panel: #1b2940;
-  --line: #34445e;
-  --text: #f8fafc;
-  --muted: #a7b4c8;
-  --blue: #38bdf8;
-  --green: #22c55e;
-  --yellow: #facc15;
+  color-scheme: dark;
+  --bg: #0b1220;
+  --panel: #131e30;
+  --panel-2: #17263a;
+  --line: #28364b;
+  --text: #eef4ff;
+  --muted: #9aabc2;
+  --blue: #60a5fa;
+  --green: #34d399;
+  --yellow: #fbbf24;
+  --teal: #6ee7c0;
 }
-
 * { box-sizing: border-box; }
-
+html { scroll-behavior: smooth; }
 body {
   margin: 0;
+  min-height: 100vh;
   background:
-    radial-gradient(ellipse at top left, #123b4a 0%, transparent 45%),
-    linear-gradient(145deg, #071522, #091827 60%, #06111d);
+    radial-gradient(ellipse at 10% 0%, rgba(20, 91, 103, .28), transparent 38%),
+    linear-gradient(160deg, #111d31, #090f1b 58%);
   color: var(--text);
-  font: 16px system-ui, -apple-system, Segoe UI, sans-serif;
+  font: 16px/1.5 system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
-
-main {
-  max-width: 900px;
-  margin: auto;
-  padding: 28px 16px 60px;
-}
-
+main { width: min(900px, 100%); margin: auto; padding: 25px 16px 60px; }
 .top {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 12px;
-  flex-wrap: wrap;
+  display: flex; justify-content: space-between; align-items: center;
+  gap: 14px; margin-bottom: 4px;
 }
-
-h1 {
-  font-size: clamp(26px, 5vw, 39px);
-  margin: 8px 0;
-  font-weight: 800;
-  letter-spacing: -1px;
+.eyebrow {
+  color: var(--blue); font-size: 12px; font-weight: 800;
+  letter-spacing: .12em; text-transform: uppercase;
 }
-
-.sub {
-  color: var(--muted);
-  margin: 0 0 24px;
-}
-
+h1 { margin: 7px 0 8px; font-size: clamp(27px, 5vw, 40px); line-height: 1.12; letter-spacing: -.04em; }
+.sub { margin: 0 0 23px; color: var(--muted); font-size: 16px; }
 button, select {
-  background: #18364b;
-  color: var(--text);
-  border: 1px solid #31566b;
-  border-radius: 13px;
-  padding: 12px 15px;
+  min-height: 48px; border: 1px solid #34465f; border-radius: 14px;
+  padding: 11px 15px; background: #1b2a40; color: var(--text);
   font: inherit;
 }
-
-button {
-  cursor: pointer;
-  transition: .2s;
-}
-
-button:hover {
-  background: #20516a;
-  border-color: var(--green);
-}
-
-.active {
-  background: #087f70;
-  border-color: var(--green);
-}
-
+button { cursor: pointer; transition: transform .18s ease, background .18s ease, border-color .18s ease; }
+button:hover { background: #23415a; border-color: var(--green); }
+button:active { transform: scale(.97); }
+#lang { min-width: 70px; font-weight: 800; }
 .panel {
-  background: linear-gradient(145deg, #132d41, #102337);
-  border: 1px solid var(--line);
-  border-radius: 20px;
-  padding: 18px;
-  margin: 15px 0;
-  box-shadow: 0 8px 25px #00000025;
+  margin: 15px 0; padding: 17px;
+  background: linear-gradient(145deg, rgba(22, 34, 53, .98), rgba(17, 28, 45, .98));
+  border: 1px solid var(--line); border-radius: 22px;
+  box-shadow: 0 10px 28px rgba(0,0,0,.15);
 }
-
-.filters {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 13px;
-}
-
-.filters label {
-  font-size: 13px;
-  color: var(--muted);
-}
-
-.filters select {
-  width: 100%;
-  margin-top: 7px;
-}
-
-.stats {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
-}
-
+.filters { display: grid; grid-template-columns: 1fr 1fr; gap: 13px; }
+.filters label { display: block; color: var(--muted); font-size: 14px; }
+.filters select { display: block; width: 100%; margin-top: 7px; }
+.stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 11px; }
 .stat {
-  background: #0a1b2b;
-  border: 1px solid #23475a;
-  border-radius: 16px;
-  padding: 15px 10px;
+  min-width: 0; padding: 14px 12px; border: 1px solid #29465a;
+  border-radius: 17px; background: #0d1727;
+  transition: transform .2s ease, border-color .2s ease;
 }
-
-.stat b {
-  font-size: 25px;
-  display: block;
-  color: var(--green);
-}
-
-.stat span {
-  font-size: 12px;
-  color: var(--muted);
-}
-
-h2 {
-  font-size: 20px;
-  margin: 25px 0 12px;
-  color: #67e8c0;
-}
-
-.event {
-  display: grid;
-  grid-template-columns: 90px 1fr;
-  gap: 13px;
-  padding: 16px 0;
-  border-bottom: 1px solid var(--line);
-}
-
-.event:last-child {
-  border: 0;
-}
-
-.date {
-  font-weight: 800;
-  color: var(--blue);
-  font-size: 17px;
-}
-
-.weekday {
-  font-size: 12px;
-  color: var(--muted);
-  font-weight: 500;
-}
-
-.who {
-  font-weight: 750;
-  color: #f0fdfa;
-}
-
-.floor {
-  color: var(--muted);
-  font-size: 13px;
-}
-
-.tags {
-  display: flex;
-  gap: 7px;
-  flex-wrap: wrap;
-  margin-top: 9px;
-}
-
-.tag {
-  font-size: 12px;
-  background: #24445c;
-  color: #dbeafe;
-  border-radius: 20px;
-  padding: 6px 11px;
-  border: 1px solid #315b70;
-}
-
-.tag.green {
-  background: #104b3d;
-  color: #a7f3d0;
-  border-color: #19765b;
-}
-
-.tag.yellow {
-  background: #514019;
-  color: #fde68a;
-}
-
-.note {
-  color: var(--muted);
-  font-size: 13px;
-  line-height: 1.6;
-}
-
-.empty {
-  text-align: center;
-  padding: 28px;
-  color: var(--muted);
-}
-
-@media(max-width:520px) {
-  main { padding: 20px 12px 45px; }
-  .filters { grid-template-columns: 1fr; }
-  .stats { gap: 7px; }
-  .stat { padding: 12px 7px; }
-  .stat b { font-size: 22px; }
-  .event { grid-template-columns: 75px 1fr; }
-  .panel { padding: 14px; }
-}
-
-:root{--bg:#0b1220;--panel:#131e30;--line:#28364b;--text:#eef4ff;--muted:#9aabc2;--blue:#60a5fa;--green:#34d399;--yellow:#fbbf24}
-*{box-sizing:border-box}body{margin:0;background:linear-gradient(160deg,#111d31,#090f1b 55%);color:var(--text);font:16px system-ui,-apple-system,Segoe UI,sans-serif}
-main{max-width:900px;margin:auto;padding:24px 16px 60px}.top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
-h1{font-size:clamp(25px,5vw,38px);margin:5px 0} .sub{color:var(--muted);margin:0 0 22px}
-button,select{background:#1b2a40;color:var(--text);border:1px solid var(--line);border-radius:12px;padding:11px 14px;font:inherit}
-button{cursor:pointer}.active{background:#1d4ed8;border-color:#3b82f6}
-.panel{background:#131e30;border:1px solid var(--line);border-radius:18px;padding:16px;margin:14px 0}
-.filters{display:grid;grid-template-columns:1fr 1fr;gap:10px}.filters label{font-size:13px;color:var(--muted)}.filters select{width:100%;margin-top:5px}
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.stat{background:#0d1727;border-radius:13px;padding:13px}.stat b{font-size:23px;display:block}.stat span{font-size:12px;color:var(--muted)}
-h2{font-size:19px;margin:22px 0 10px}.event{display:grid;grid-template-columns:92px 1fr;gap:12px;padding:14px 0;border-bottom:1px solid var(--line)}.event:last-child{border:0}
-.date{font-weight:750;color:var(--blue)}.weekday{font-size:12px;color:var(--muted);font-weight:500}.who{font-weight:700}.floor{color:var(--muted);font-size:13px}
-.tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}.tag{font-size:12px;background:#26364d;color:#dce8f8;border-radius:20px;padding:4px 9px}.tag.green{background:#123d35;color:#a7f3d0}.tag.yellow{background:#4b3714;color:#fde68a}
-.note{color:var(--muted);font-size:13px;line-height:1.5}.empty{text-align:center;padding:25px;color:var(--muted)}
-@media(max-width:520px){.filters{grid-template-columns:1fr}.stats{grid-template-columns:repeat(3,1fr)}.event{grid-template-columns:78px 1fr}.panel{padding:13px}}
-</style>/* VERSION 2.0 – PREMIUM DESIGN */
-
+.stat:hover { transform: translateY(-3px); border-color: #36766f; }
+.stat b { display: block; color: var(--green); font-size: clamp(21px, 4vw, 29px); line-height: 1.2; }
+.stat span { display: block; margin-top: 5px; color: var(--muted); font-size: 13px; }
 .upcoming-card {
-  position: relative;
-  overflow: hidden;
-  background: linear-gradient(135deg,#123d43,#142b40 65%,#101b30);
-  border: 1px solid #277b70;
-  border-radius: 22px;
-  padding: 21px;
-  margin: 18px 0;
-  box-shadow: 0 10px 30px #0005;
+  position: relative; overflow: hidden; margin: 17px 0 22px; padding: 21px;
+  border: 1px solid #287b70; border-radius: 23px;
+  background: linear-gradient(125deg, #123d43, #142b40 68%, #142238);
+  box-shadow: 0 12px 32px rgba(0,0,0,.24);
 }
-
-.upcoming-card:after {
-  content: "♻️";
-  position: absolute;
-  right: 18px;
-  top: 20px;
-  font-size: 55px;
-  opacity: .16;
+.upcoming-card::after {
+  content: "♻️"; position: absolute; right: 18px; top: 17px;
+  font-size: 58px; opacity: .16; pointer-events: none;
 }
-
-.upcoming-title {
-  color: #6ee7b7;
-  font-size: 13px;
-  font-weight: 800;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-}
-
-.upcoming-date {
-  font-size: 36px;
-  font-weight: 850;
-  margin: 10px 0;
-  color: white;
-}
-
-.upcoming-info {
-  color: #cbd5e1;
-  font-size: 14px;
-}
-
+.upcoming-title { color: #6ee7b7; font-size: 12px; font-weight: 850; letter-spacing: .12em; }
+.upcoming-date { position: relative; z-index: 1; margin: 9px 0 7px; font-size: clamp(25px, 5vw, 35px); font-weight: 850; line-height: 1.2; }
+.upcoming-info { position: relative; z-index: 1; max-width: 90%; color: #d3e2ed; font-size: 14px; }
+.upcoming-countdown { margin-top: 13px; color: #6ee7b7; font-size: 14px; font-weight: 800; }
+h2 { margin: 25px 0 11px; color: var(--teal); font-size: 21px; letter-spacing: -.02em; }
 .event {
-  transition: transform .2s, border-color .2s;
+  display: grid; grid-template-columns: 88px minmax(0, 1fr); gap: 13px;
+  padding: 15px 0; border-bottom: 1px solid var(--line);
+  transition: background .2s ease, border-color .2s ease;
 }
-
+.event:last-child { border-bottom: 0; }
 .event-next {
-  background: linear-gradient(90deg,#123b35,#142438);
-  border: 1px solid #277b70 !important;
-  border-radius: 14px;
-  padding: 15px !important;
-  margin: 5px 0;
+  margin: 5px 0; padding: 15px !important; border: 1px solid #287b70 !important;
+  border-radius: 15px; background: linear-gradient(90deg, rgba(18,59,53,.72), rgba(20,36,56,.72));
 }
-
+.date { color: var(--blue); font-size: 18px; font-weight: 850; }
+.weekday { color: var(--muted); font-size: 12px; font-weight: 500; }
+.who { color: #f0fdfa; font-weight: 800; overflow-wrap: anywhere; }
+.floor { color: var(--muted); font-size: 13px; }
+.tags { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 9px; }
 .tag {
-  padding: 7px 11px;
-  font-size: 12px;
-  font-weight: 600;
-  transition: .2s;
+  display: inline-flex; align-items: center; gap: 5px; padding: 6px 10px;
+  border: 1px solid #315b70; border-radius: 999px;
+  background: #263b53; color: #e0edfb; font-size: 12px; font-weight: 650;
 }
+.tag.green { border-color: #19765b; background: #123f36; color: #a7f3d0; }
+.tag.yellow { border-color: #8a6b25; background: #4b3714; color: #fde68a; }
+.note { color: var(--muted); font-size: 12px; line-height: 1.65; }
+.empty { padding: 28px; color: var(--muted); text-align: center; }
+@media (max-width: 560px) {
+  main { padding: 22px 13px 45px; }
+  .filters { grid-template-columns: 1fr; gap: 11px; }
+  .panel { padding: 14px; border-radius: 19px; }
+  .stats { gap: 7px; }
+  .stat { padding: 12px 8px; }
+  .stat span { font-size: 11px; }
+  .event { grid-template-columns: 73px minmax(0, 1fr); gap: 10px; }
+  .upcoming-card { padding: 18px; }
+  .upcoming-info { max-width: 88%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; }
+}
+</style>
+</head>
+<body>
+<main>
+  <header class="top">
+    <div>
+      <div class="eyebrow">AWG WUPPERTAL · STERNSTRASSE</div>
+      <h1 id="title">Kalendarz wywozu odpadów</h1>
+    </div>
+    <button id="lang" type="button" aria-label="Zmień język">DE</button>
+  </header>
 
-.tag:hover {
-  transform: translateY(-2px);
-}
+  <p class="sub" id="subtitle">Terminy 2026 · wybierz gospodarstwo, aby zobaczyć własne odbiory</p>
 
-button, select {
-  transition: all .2s ease;
-}
+  <section class="panel filters" aria-label="Filtry kalendarza">
+    <label><span id="residentLabel">Gospodarstwo</span>
+      <select id="resident">
+        <option value="ALL">Wszystkie gospodarstwa</option>
+        <option value="NIESLONY">NIESLONY</option>
+        <option value="WESTERMANN">WESTERMANN</option>
+        <option value="CYRYL">CYRYL</option>
+        <option value="KLADOVASILAKIS">KLADOVASILAKIS</option>
+      </select>
+    </label>
+    <label><span id="monthLabel">Miesiąc</span>
+      <select id="month"><option value="ALL">Cały rok 2026</option></select>
+    </label>
+  </section>
 
-button:active {
-  transform: scale(.97);
-}
+  <section class="panel stats" aria-label="Statystyki">
+    <div class="stat"><b id="count">0</b><span id="countLabel">Terminów</span></div>
+    <div class="stat"><b id="next">—</b><span id="nextLabel">Najbliższy termin</span></div>
+    <div class="stat"><b>2026</b><span id="yearLabel">Rok kalendarzowy</span></div>
+  </section>
 
-.stat {
-  transition: transform .2s;
-}
+  <section id="upcoming" class="upcoming-card" aria-live="polite"></section>
+  <div id="events"></div>
 
-.stat:hover {
-  transform: translateY(-3px);
-}
-<body><main>
-<div class="top"><div><div style="color:#60a5fa;font-weight:700;letter-spacing:.08em;font-size:12px">AWG WUPPERTAL · STERNSTRASSE</div><h1 id="title">Kalendarz wywozu odpadów</h1></div><button id="lang">DE</button></div>
-<p class="sub" id="subtitle">Terminy 2026 · wybierz gospodarstwo, aby zobaczyć własne odbiory</p>
-<section class="panel"><div class="filters">
-<label><span id="residentLabel">Gospodarstwo</span><select id="resident"><option value="ALL">Wszystkie gospodarstwa</option><option>NIESLONY</option><option>WESTERMANN</option><option>CYRYL</option><option>KLADOVASILAKIS</option></select></label>
-<label><span id="monthLabel">Miesiąc</span><select id="month"><option value="ALL">Cały rok 2026</option></select></label>
-</div></section>
-<section class="panel stats"><div class="stat"><b id="count">0</b><span id="countLabel">Terminów</span></div><div class="stat"><b id="next">—</b><span id="nextLabel">Najbliższy termin</span></div><div class="stat"><b>2026</b><span id="yearLabel">Rok kalendarzowy</span></div></section>
-<div id="events"></div>
-<p class="note" id="legend">★ Termin przesunięty według oryginalnego kalendarza AWG. Wspólny termin Grünschnitt dotyczy wszystkich gospodarstw.</p>
-<p class="note">Źródło: dostarczony kalendarz AWG Wuppertal 2026, Sternstraße.</p>
+  <p class="note" id="legend">★ Termin przesunięty według oryginalnego kalendarza AWG. Wspólny termin Grünschnitt dotyczy wszystkich gospodarstw.</p>
+  <p class="note" id="source">Źródło: dostarczony kalendarz AWG Wuppertal 2026, Sternstraße.</p>
 </main>
+
 <script>
-const residents={NIESLONY:2,WESTERMANN:1,CYRYL:0,KLADOVASILAKIS:3};
-const rows=[
-["2026-01-05","NIESLONY","Restmüll|Restmüll 50%|Gelbe Tonne"],
-["2026-01-12","NIESLONY","Restmüll|Biomüll|Weihnachtsbäume"],
-["2026-01-19","WESTERMANN","Restmüll|Restmüll 50%|Gelbe Tonne"],
-["2026-01-26","WESTERMANN","Restmüll|Biomüll|Altpapier"],
-["2026-02-02","CYRYL","Restmüll|Restmüll 50%|Gelbe Tonne"],
-["2026-02-09","CYRYL","Restmüll|Biomüll"],
-["2026-02-16","KLADOVASILAKIS","Restmüll|Restmüll 50%|Gelbe Tonne|Sperrmüll"],
-["2026-02-23","KLADOVASILAKIS","Restmüll|Altpapier"],
-["2026-03-02","NIESLONY","Restmüll|Restmüll 50%|Gelbe Tonne"],
-["2026-03-07","WSPÓLNY","Grünschnitt"],
-["2026-03-09","NIESLONY","Restmüll|Biomüll"],
-["2026-03-14","WSPÓLNY","Grünschnitt"],
-["2026-03-16","WESTERMANN","Restmüll|Restmüll 50%|Gelbe Tonne"],
-["2026-03-21","WSPÓLNY","Grünschnitt"],
-["2026-03-23","WESTERMANN","Restmüll|Altpapier"],
-["2026-03-28","CYRYL","Restmüll|Restmüll 50%|Gelbe Tonne",1],
-["2026-04-07","CYRYL","Restmüll|Biomüll",1],
-["2026-04-13","KLADOVASILAKIS","Restmüll|Restmüll 50%|Gelbe Tonne"],
-["2026-04-18","WSPÓLNY","Grünschnitt"],
-["2026-04-20","KLADOVASILAKIS","Restmüll|Altpapier"],
-["2026-04-25","WSPÓLNY","Grünschnitt"],
-["2026-04-27","NIESLONY","Restmüll|Restmüll 50%|Gelbe Tonne"],
-["2026-05-04","NIESLONY","Restmüll|Biomüll"],
-["2026-05-09","WSPÓLNY","Grünschnitt"],
-["2026-05-11","WESTERMANN","Restmüll|Restmüll 50%|Gelbe Tonne"],
-["2026-05-18","WESTERMANN","Restmüll|Altpapier|Sperrmüll"],
-["2026-05-26","CYRYL","Restmüll|Restmüll 50%|Gelbe Tonne",1],
-["2026-06-01","CYRYL","Restmüll|Biomüll"],
-["2026-06-08","KLADOVASILAKIS","Restmüll|Restmüll 50%|Gelbe Tonne"],
-["2026-06-15","KLADOVASILAKIS","Restmüll|Altpapier"],
-["2026-06-22","NIESLONY","Restmüll|Restmüll 50%|Gelbe Tonne"],
-["2026-06-29","NIESLONY","Restmüll|Biomüll"],
-["2026-07-06","WESTERMANN","Restmüll|Restmüll 50%|Gelbe Tonne"],
-["2026-07-13","WESTERMANN","Restmüll|Altpapier"],
-["2026-07-20","CYRYL","Restmüll|Restmüll 50%|Gelbe Tonne"],
-["2026-07-27","CYRYL","Restmüll|Biomüll"],
-["2026-08-03","KLADOVASILAKIS","Restmüll|Restmüll 50%|Gelbe Tonne"],
-["2026-08-10","KLADOVASILAKIS","Restmüll|Altpapier"],
-["2026-08-17","NIESLONY","Restmüll|Restmüll 50%|Gelbe Tonne"],
-["2026-08-24","NIESLONY","Restmüll|Biomüll|Sperrmüll"],
-["2026-08-31","WESTERMANN","Restmüll|Restmüll 50%|Gelbe Tonne"],
-["2026-09-07","WESTERMANN","Restmüll|Altpapier"],
-["2026-09-14","CYRYL","Restmüll|Restmüll 50%|Gelbe Tonne"],
-["2026-09-21","CYRYL","Restmüll|Biomüll"],
-["2026-09-28","KLADOVASILAKIS","Restmüll|Restmüll 50%|Gelbe Tonne"],
-["2026-10-05","KLADOVASILAKIS","Restmüll|Altpapier"],
-["2026-10-12","NIESLONY","Restmüll|Restmüll 50%|Gelbe Tonne"],
-["2026-10-17","WSPÓLNY","Grünschnitt"],
-["2026-10-19","NIESLONY","Restmüll|Biomüll"],
-["2026-10-24","WSPÓLNY","Grünschnitt"],
-["2026-10-26","WESTERMANN","Restmüll|Restmüll 50%|Gelbe Tonne"],
-["2026-10-31","WSPÓLNY","Grünschnitt"],
-["2026-11-02","WESTERMANN","Restmüll|Altpapier"],
-["2026-11-07","WSPÓLNY","Grünschnitt"],
-["2026-11-09","CYRYL","Restmüll|Restmüll 50%|Gelbe Tonne|Sperrmüll"],
-["2026-11-14","WSPÓLNY","Grünschnitt"],
-["2026-11-16","CYRYL","Restmüll|Biomüll"],
-["2026-11-21","WSPÓLNY","Grünschnitt"],
-["2026-11-23","KLADOVASILAKIS","Restmüll|Restmüll 50%|Gelbe Tonne"],
-["2026-11-30","KLADOVASILAKIS","Restmüll|Altpapier"],
-["2026-12-07","NIESLONY","Restmüll|Restmüll 50%|Gelbe Tonne"],
-["2026-12-14","NIESLONY","Restmüll|Biomüll"],
-["2026-12-19","WESTERMANN","Restmüll|Restmüll 50%|Gelbe Tonne",1],
-["2026-12-28","WESTERMANN","Restmüll|Altpapier"]
+"use strict";
+
+const residents = { NIESLONY: 2, WESTERMANN: 1, CYRYL: 0, KLADOVASILAKIS: 3 };
+
+const rows = [
+  ["2026-01-05","NIESLONY","Restmüll|Restmüll 50%|Gelbe Tonne"],
+  ["2026-01-12","NIESLONY","Restmüll|Biomüll|Weihnachtsbäume"],
+  ["2026-01-19","WESTERMANN","Restmüll|Restmüll 50%|Gelbe Tonne"],
+  ["2026-01-26","WESTERMANN","Restmüll|Biomüll|Altpapier"],
+  ["2026-02-02","CYRYL","Restmüll|Restmüll 50%|Gelbe Tonne"],
+  ["2026-02-09","CYRYL","Restmüll|Biomüll"],
+  ["2026-02-16","KLADOVASILAKIS","Restmüll|Restmüll 50%|Gelbe Tonne|Sperrmüll"],
+  ["2026-02-23","KLADOVASILAKIS","Restmüll|Altpapier"],
+  ["2026-03-02","NIESLONY","Restmüll|Restmüll 50%|Gelbe Tonne"],
+  ["2026-03-07","WSPÓLNY","Grünschnitt"],
+  ["2026-03-09","NIESLONY","Restmüll|Biomüll"],
+  ["2026-03-14","WSPÓLNY","Grünschnitt"],
+  ["2026-03-16","WESTERMANN","Restmüll|Restmüll 50%|Gelbe Tonne"],
+  ["2026-03-21","WSPÓLNY","Grünschnitt"],
+  ["2026-03-23","WESTERMANN","Restmüll|Altpapier"],
+  ["2026-03-28","CYRYL","Restmüll|Restmüll 50%|Gelbe Tonne",1],
+  ["2026-04-07","CYRYL","Restmüll|Biomüll",1],
+  ["2026-04-13","KLADOVASILAKIS","Restmüll|Restmüll 50%|Gelbe Tonne"],
+  ["2026-04-18","WSPÓLNY","Grünschnitt"],
+  ["2026-04-20","KLADOVASILAKIS","Restmüll|Altpapier"],
+  ["2026-04-25","WSPÓLNY","Grünschnitt"],
+  ["2026-04-27","NIESLONY","Restmüll|Restmüll 50%|Gelbe Tonne"],
+  ["2026-05-04","NIESLONY","Restmüll|Biomüll"],
+  ["2026-05-09","WSPÓLNY","Grünschnitt"],
+  ["2026-05-11","WESTERMANN","Restmüll|Restmüll 50%|Gelbe Tonne"],
+  ["2026-05-18","WESTERMANN","Restmüll|Altpapier|Sperrmüll"],
+  ["2026-05-26","CYRYL","Restmüll|Restmüll 50%|Gelbe Tonne",1],
+  ["2026-06-01","CYRYL","Restmüll|Biomüll"],
+  ["2026-06-08","KLADOVASILAKIS","Restmüll|Restmüll 50%|Gelbe Tonne"],
+  ["2026-06-15","KLADOVASILAKIS","Restmüll|Altpapier"],
+  ["2026-06-22","NIESLONY","Restmüll|Restmüll 50%|Gelbe Tonne"],
+  ["2026-06-29","NIESLONY","Restmüll|Biomüll"],
+  ["2026-07-06","WESTERMANN","Restmüll|Restmüll 50%|Gelbe Tonne"],
+  ["2026-07-13","WESTERMANN","Restmüll|Altpapier"],
+  ["2026-07-20","CYRYL","Restmüll|Restmüll 50%|Gelbe Tonne"],
+  ["2026-07-27","CYRYL","Restmüll|Biomüll"],
+  ["2026-08-03","KLADOVASILAKIS","Restmüll|Restmüll 50%|Gelbe Tonne"],
+  ["2026-08-10","KLADOVASILAKIS","Restmüll|Altpapier"],
+  ["2026-08-17","NIESLONY","Restmüll|Restmüll 50%|Gelbe Tonne"],
+  ["2026-08-24","NIESLONY","Restmüll|Biomüll|Sperrmüll"],
+  ["2026-08-31","WESTERMANN","Restmüll|Restmüll 50%|Gelbe Tonne"],
+  ["2026-09-07","WESTERMANN","Restmüll|Altpapier"],
+  ["2026-09-14","CYRYL","Restmüll|Restmüll 50%|Gelbe Tonne"],
+  ["2026-09-21","CYRYL","Restmüll|Biomüll"],
+  ["2026-09-28","KLADOVASILAKIS","Restmüll|Restmüll 50%|Gelbe Tonne"],
+  ["2026-10-05","KLADOVASILAKIS","Restmüll|Altpapier"],
+  ["2026-10-12","NIESLONY","Restmüll|Restmüll 50%|Gelbe Tonne"],
+  ["2026-10-17","WSPÓLNY","Grünschnitt"],
+  ["2026-10-19","NIESLONY","Restmüll|Biomüll"],
+  ["2026-10-24","WSPÓLNY","Grünschnitt"],
+  ["2026-10-26","WESTERMANN","Restmüll|Restmüll 50%|Gelbe Tonne"],
+  ["2026-10-31","WSPÓLNY","Grünschnitt"],
+  ["2026-11-02","WESTERMANN","Restmüll|Altpapier"],
+  ["2026-11-07","WSPÓLNY","Grünschnitt"],
+  ["2026-11-09","CYRYL","Restmüll|Restmüll 50%|Gelbe Tonne|Sperrmüll"],
+  ["2026-11-14","WSPÓLNY","Grünschnitt"],
+  ["2026-11-16","CYRYL","Restmüll|Biomüll"],
+  ["2026-11-21","WSPÓLNY","Grünschnitt"],
+  ["2026-11-23","KLADOVASILAKIS","Restmüll|Restmüll 50%|Gelbe Tonne"],
+  ["2026-11-30","KLADOVASILAKIS","Restmüll|Altpapier"],
+  ["2026-12-07","NIESLONY","Restmüll|Restmüll 50%|Gelbe Tonne"],
+  ["2026-12-14","NIESLONY","Restmüll|Biomüll"],
+  ["2026-12-19","WESTERMANN","Restmüll|Restmüll 50%|Gelbe Tonne",1],
+  ["2026-12-28","WESTERMANN","Restmüll|Altpapier"]
 ];
-const pl={title:"Kalendarz wywozu odpadów",subtitle:"Terminy 2026 · wybierz gospodarstwo, aby zobaczyć własne odbiory",resident:"Gospodarstwo",all:"Wszystkie gospodarstwa",month:"Miesiąc",year:"Cały rok 2026",count:"Terminów",next:"Najbliższy termin",yearLabel:"Rok kalendarzowy",common:"Wspólny termin",floor:"Piętro",legend:"★ Termin przesunięty według oryginalnego kalendarza AWG. Wspólny termin Grünschnitt dotyczy wszystkich gospodarstw.",none:"Brak terminów dla wybranych filtrów.",months:["Styczeń","Luty","Marzec","Kwiecień","Maj","Czerwiec","Lipiec","Sierpień","Wrzesień","Październik","Listopad","Grudzień"],types:{"Restmüll":"Odpady zmieszane","Restmüll 50%":"Pojemnik 50%","Gelbe Tonne":"Żółty pojemnik","Biomüll":"Bioodpady","Altpapier":"Papier","Sperrmüll":"Odpady wielkogabarytowe","Weihnachtsbäume":"Choinki","Grünschnitt":"Odpady zielone"}};
-const de={title:"Abfallkalender",subtitle:"Termine 2026 · Haushalt auswählen, um die eigenen Abholungen zu sehen",resident:"Haushalt",all:"Alle Haushalte",month:"Monat",year:"Ganzes Jahr 2026",count:"Termine",next:"Nächster Termin",yearLabel:"Kalenderjahr",common:"Gemeinsamer Termin",floor:"Etage",legend:"★ Laut ursprünglichem AWG-Kalender verschobener Termin. Gemeinsame Grünschnitt-Termine gelten für alle Haushalte.",none:"Keine Termine für diese Filter.",months:["Januar","Februar","März","April","Mai","Juni","Juli","August","September","Oktober","November","Dezember"],types:{"Restmüll":"Restmüll","Restmüll 50%":"Restmüll 50%","Gelbe Tonne":"Gelbe Tonne","Biomüll":"Biomüll","Altpapier":"Altpapier","Sperrmüll":"Sperrmüll","Weihnachtsbäume":"Weihnachtsbäume","Grünschnitt":"Grünschnitt"}};
-let lang="pl";const $=id=>document.getElementById(id);
- function dateObj(s){return new Date(s+"T12:00:00")}
-function render() function wasteIcon(type) {
-  const icons = {
-    "Restmüll": "🗑️",
-    "Restmüll 50%": "♻️",
-    "Gelbe Tonne": "🟡",
-    "Biomüll": "🍃",
-    "Altpapier": "📦",
-    "Sperrmüll": "🛋️",
-    "Weihnachtsbäume": "🎄",
-    "Grünschnitt": "🌿"
-  };
-  return icons[type] || "♻️";
-}{const t=lang==="pl"?pl:de;document.documentElement.lang=lang;$("title").textContent=t.title;$("subtitle").textContent=t.subtitle;$("residentLabel").textContent=t.resident;$("monthLabel").textContent=t.month;$("countLabel").textContent=t.count;$("nextLabel").textContent=t.next;$("yearLabel").textContent=t.yearLabel;$("legend").textContent=t.legend;$("lang").textContent=lang==="pl"?"DE":"PL";
-const res=$("resident").value, mon=$("month").value;const list=rows.filter(r=>(res==="ALL"||r[1]===res||r[1]==="WSPÓLNY")&&(mon==="ALL"||Number(r[0].slice(5,7))===Number(mon)));
-$("count").textContent=list.length;const today=new Date();const upcoming=list.find(r=>dateObj(r[0])>=new Date(today.getFullYear(),today.getMonth(),today.getDate()));$("next").textContent=upcoming?dateObj(upcoming[0]).toLocaleDateString(lang==="pl"?"pl-PL":"de-DE",{day:"2-digit",month:"2-digit"}):"—";
-const groups={};list.forEach(r=>{const m=Number(r[0].slice(5,7))-1;(groups[m]??=[]).push(r)});let out="";
-Object.keys(groups).sort((a,b)=>a-b).forEach(m=>{out+=`<h2>${t.months[m]} 2026</h2><section class="panel">`;groups[m].forEach(r=>{const d=dateObj(r[0]);const who=r[1]==="WSPÓLNY"?t.common:r[1];const day=d.toLocaleDateString(lang==="pl"?"pl-PL":"de-DE",{weekday:"short"});const tags=r[2].split("|").map(x=>`<span class="tag ${x==="Grünschnitt"?"green":""}">${t.types[x]||x}</span>`).join("");out+=`<div class="event"><div class="date">${d.toLocaleDateString(lang==="pl"?"pl-PL":"de-DE",{day:"2-digit",month:"2-digit"})}${r[3]?" ★":""}<div class="weekday">${day}</div></div><div><div class="who">${who}</div><div class="floor">${r[1]==="WSPÓLNY"?"":t.floor+" "+residents[r[1]]}</div><div class="tags">${tags}</div></div></div>`});out+="</section>"});
-$("events").innerHTML=out||`<section class="panel empty">${t.none}</section>`;
+
+const pl = {
+  title: "Kalendarz wywozu odpadów",
+  subtitle: "Terminy 2026 · wybierz gospodarstwo, aby zobaczyć własne odbiory",
+  resident: "Gospodarstwo", all: "Wszystkie gospodarstwa", month: "Miesiąc",
+  year: "Cały rok 2026", count: "Terminów", next: "Najbliższy termin",
+  yearLabel: "Rok kalendarzowy", common: "Termin wspólny",
+  floor: "Piętro", legend: "★ Termin przesunięty według oryginalnego kalendarza AWG. Wspólne terminy odpadów zielonych dotyczą wszystkich gospodarstw.",
+  none: "Brak terminów dla wybranych filtrów.",
+  source: "Źródło: dostarczony kalendarz AWG Wuppertal 2026, Sternstraße.",
+  today: "Odbiór dzisiaj!", tomorrow: "Odbiór jutro!", inDays: "Za",
+  nextTitle: "NAJBLIŻSZY ODBIÓR",
+  months: ["Styczeń","Luty","Marzec","Kwiecień","Maj","Czerwiec","Lipiec","Sierpień","Wrzesień","Październik","Listopad","Grudzień"],
+  types: {
+    "Restmüll":"Odpady zmieszane", "Restmüll 50%":"Pojemnik 50%",
+    "Gelbe Tonne":"Żółty pojemnik", "Biomüll":"Bioodpady",
+    "Altpapier":"Papier", "Sperrmüll":"Odpady wielkogabarytowe",
+    "Weihnachtsbäume":"Choinki", "Grünschnitt":"Odpady zielone"
+  }
+};
+
+const de = {
+  title: "Abfallkalender",
+  subtitle: "Termine 2026 · Haushalt auswählen, um die eigenen Abholungen zu sehen",
+  resident: "Haushalt", all: "Alle Haushalte", month: "Monat",
+  year: "Ganzes Jahr 2026", count: "Termine", next: "Nächster Termin",
+  yearLabel: "Kalenderjahr", common: "Gemeinsamer Termin",
+  floor: "Etage", legend: "★ Laut ursprünglichem AWG-Kalender verschobener Termin. Gemeinsame Grünschnitt-Termine gelten für alle Haushalte.",
+  none: "Keine Termine für diese Filter.",
+  source: "Quelle: bereitgestellter AWG-Abfallkalender Wuppertal 2026, Sternstraße.",
+  today: "Abholung heute!", tomorrow: "Abholung morgen!", inDays: "In",
+  nextTitle: "NÄCHSTE ABHOLUNG",
+  months: ["Januar","Februar","März","April","Mai","Juni","Juli","August","September","Oktober","November","Dezember"],
+  types: {
+    "Restmüll":"Restmüll", "Restmüll 50%":"Restmüll 50%",
+    "Gelbe Tonne":"Gelbe Tonne", "Biomüll":"Biomüll",
+    "Altpapier":"Altpapier", "Sperrmüll":"Sperrmüll",
+    "Weihnachtsbäume":"Weihnachtsbäume", "Grünschnitt":"Grünschnitt"
+  }
+};
+
+const wasteIcons = {
+  "Restmüll":"🗑️", "Restmüll 50%":"♻️", "Gelbe Tonne":"🟡",
+  "Biomüll":"🍃", "Altpapier":"📦", "Sperrmüll":"🛋️",
+  "Weihnachtsbäume":"🎄", "Grünschnitt":"🌿"
+};
+
+let lang = "pl";
+const $ = id => document.getElementById(id);
+
+function dateObj(value) {
+  return new Date(value + "T12:00:00");
 }
-pl.months.forEach((m,i)=>{const o=document.createElement("option");o.value=i+1;o.textContent=m; $("month").append(o)});
-$("lang").onclick=()=>{lang=lang==="pl"?"de":"pl";const t=lang==="pl"?pl:de;const sel=$("month");[...sel.options].forEach((o,i)=>{if(i>0)o.textContent=t.months[i-1]});$("resident").options[0].textContent=t.all;render()};
-$("resident").onchange=render;$("month").onchange=render;render();
-</script></body></html>
+
+function formatDate(date, options) {
+  return date.toLocaleDateString(lang === "pl" ? "pl-PL" : "de-DE", options);
+}
+
+function wasteIcon(type) {
+  return wasteIcons[type] || "♻️";
+}
+
+function render() {
+  const t = lang === "pl" ? pl : de;
+  document.documentElement.lang = lang;
+
+  $("title").textContent = t.title;
+  $("subtitle").textContent = t.subtitle;
+  $("residentLabel").textContent = t.resident;
+  $("monthLabel").textContent = t.month;
+  $("countLabel").textContent = t.count;
+  $("nextLabel").textContent = t.next;
+  $("yearLabel").textContent = t.yearLabel;
+  $("legend").textContent = t.legend;
+  $("source").textContent = t.source;
+  $("lang").textContent = lang === "pl" ? "DE" : "PL";
+  $("lang").setAttribute("aria-label", lang === "pl" ? "Auf Deutsch wechseln" : "Zmień język na polski");
+
+  const resident = $("resident").value;
+  const month = $("month").value;
+
+  const list = rows.filter(row =>
+    (resident === "ALL" || row[1] === resident || row[1] === "WSPÓLNY") &&
+    (month === "ALL" || Number(row[0].slice(5, 7)) === Number(month))
+  );
+
+  $("count").textContent = list.length;
+
+  const today = new Date();
+  const todayStart = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+  const upcoming = list.find(row => dateObj(row[0]) >= todayStart);
+
+  $("next").textContent = upcoming
+    ? formatDate(dateObj(upcoming[0]), { day: "2-digit", month: "2-digit" })
+    : "—";
+
+  const upcomingCard = $("upcoming");
+  if (upcoming) {
+    const date = dateObj(upcoming[0]);
+    const days = Math.round((date - todayStart) / 86400000);
+    const types = upcoming[2].split("|").map(type =>
+      wasteIcon(type) + " " + (t.types[type] || type)
+    ).join(" · ");
+    const household = upcoming[1] === "WSPÓLNY" ? t.common : upcoming[1];
+
+    upcomingCard.style.display = "";
+    upcomingCard.innerHTML = `
+      <div class="upcoming-title">${t.nextTitle}</div>
+      <div class="upcoming-date">${formatDate(date, { weekday: "long", day: "2-digit", month: "long" })}${upcoming[3] ? " ★" : ""}</div>
+      <div class="upcoming-info">${household}${upcoming[1] !== "WSPÓLNY" ? " · " + t.floor + " " + residents[upcoming[1]] : ""}</div>
+      <div class="upcoming-info" style="margin-top:7px">${types}</div>
+      <div class="upcoming-countdown">${
+        days === 0 ? t.today :
+        days === 1 ? t.tomorrow :
+        t.inDays + " " + days + " " + (lang === "pl" ? "dni" : "Tagen")
+      }</div>`;
+  } else {
+    upcomingCard.style.display = "none";
+    upcomingCard.innerHTML = "";
+  }
+
+  const groups = {};
+  list.forEach(row => {
+    const monthIndex = Number(row[0].slice(5, 7)) - 1;
+    (groups[monthIndex] ||= []).push(row);
+  });
+
+  let output = "";
+  Object.keys(groups).sort((a, b) => Number(a) - Number(b)).forEach(monthIndex => {
+    output += `<h2>${t.months[monthIndex]} 2026</h2><section class="panel">`;
+
+    groups[monthIndex].forEach(row => {
+      const date = dateObj(row[0]);
+      const household = row[1] === "WSPÓLNY" ? t.common : row[1];
+      const weekday = formatDate(date, { weekday: "short" });
+      const tags = row[2].split("|").map(type => {
+        const colorClass = type === "Grünschnitt" ? "green" : "";
+        return `<span class="tag ${colorClass}">${wasteIcon(type)} ${t.types[type] || type}</span>`;
+      }).join("");
+
+      const isUpcoming = row === upcoming;
+      const floor = row[1] === "WSPÓLNY" ? "" : `${t.floor} ${residents[row[1]]}`;
+
+      output += `
+        <div class="event ${isUpcoming ? "event-next" : ""}">
+          <div class="date">
+            ${formatDate(date, { day: "2-digit", month: "2-digit" })}${row[3] ? " ★" : ""}
+            <div class="weekday">${weekday}</div>
+          </div>
+          <div>
+            <div class="who">${household}</div>
+            <div class="floor">${floor}</div>
+            <div class="tags">${tags}</div>
+          </div>
+        </div>`;
+    });
+
+    output += "</section>";
+  });
+
+  $("events").innerHTML = output || `<section class="panel empty">${t.none}</section>`;
+}
+
+function updateMonthOptions() {
+  const select = $("month");
+  const currentValue = select.value || "ALL";
+  const t = lang === "pl" ? pl : de;
+
+  select.innerHTML = "";
+  const allOption = document.createElement("option");
+  allOption.value = "ALL";
+  allOption.textContent = t.year;
+  select.appendChild(allOption);
+
+  t.months.forEach((monthName, index) => {
+    const option = document.createElement("option");
+    option.value = String(index + 1);
+    option.textContent = monthName;
+    select.appendChild(option);
+  });
+
+  select.value = currentValue;
+}
+
+$("lang").addEventListener("click", () => {
+  lang = lang === "pl" ? "de" : "pl";
+  updateMonthOptions();
+  $("resident").options[0].textContent = (lang === "pl" ? pl : de).all;
+  render();
+});
+
+$("resident").addEventListener("change", render);
+$("month").addEventListener("change", render);
+
+updateMonthOptions();
+render();
+</script>
+</body>
+</html>
