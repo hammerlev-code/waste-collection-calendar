@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#101827">
+<title>Waste Collection Calendar · Sternstraße 2026</title>
+<style>
+:root{--bg:#0b1220;--panel:#131e30;--line:#28364b;--text:#eef4ff;--muted:#9aabc2;--blue:#60a5fa;--green:#34d399;--yellow:#fbbf24}
+*{box-sizing:border-box}body{margin:0;background:linear-gradient(160deg,#111d31,#090f1b 55%);color:var(--text);font:16px system-ui,-apple-system,Segoe UI,sans-serif}
+main{max-width:900px;margin:auto;padding:24px 16px 60px}.top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+h1{font-size:clamp(25px,5vw,38px);margin:5px 0} .sub{color:var(--muted);margin:0 0 22px}
+button,select{background:#1b2a40;color:var(--text);border:1px solid var(--line);border-radius:12px;padding:11px 14px;font:inherit}
+button{cursor:pointer}.active{background:#1d4ed8;border-color:#3b82f6}
+.panel{background:#131e30;border:1px solid var(--line);border-radius:18px;padding:16px;margin:14px 0}
+.filters{display:grid;grid-template-columns:1fr 1fr;gap:10px}.filters label{font-size:13px;color:var(--muted)}.filters select{width:100%;margin-top:5px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.stat{background:#0d1727;border-radius:13px;padding:13px}.stat b{font-size:23px;display:block}.stat span{font-size:12px;color:var(--muted)}
+h2{font-size:19px;margin:22px 0 10px}.event{display:grid;grid-template-columns:92px 1fr;gap:12px;padding:14px 0;border-bottom:1px solid var(--line)}.event:last-child{border:0}
+.date{font-weight:750;color:var(--blue)}.weekday{font-size:12px;color:var(--muted);font-weight:500}.who{font-weight:700}.floor{color:var(--muted);font-size:13px}
+.tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}.tag{font-size:12px;background:#26364d;color:#dce8f8;border-radius:20px;padding:4px 9px}.tag.green{background:#123d35;color:#a7f3d0}.tag.yellow{background:#4b3714;color:#fde68a}
+.note{color:var(--muted);font-size:13px;line-height:1.5}.empty{text-align:center;padding:25px;color:var(--muted)}
+@media(max-width:520px){.filters{grid-template-columns:1fr}.stats{grid-template-columns:repeat(3,1fr)}.event{grid-template-columns:78px 1fr}.panel{padding:13px}}
+</style></head>
+<body><main>
+<div class="top"><div><div style="color:#60a5fa;font-weight:700;letter-spacing:.08em;font-size:12px">AWG WUPPERTAL · STERNSTRASSE</div><h1 id="title">Kalendarz wywozu odpadów</h1></div><button id="lang">DE</button></div>
+<p class="sub" id="subtitle">Terminy 2026 · wybierz gospodarstwo, aby zobaczyć własne odbiory</p>
+<section class="panel"><div class="filters">
+<label><span id="residentLabel">Gospodarstwo</span><select id="resident"><option value="ALL">Wszystkie gospodarstwa</option><option>NIESLONY</option><option>WESTERMANN</option><option>CYRYL</option><option>KLADOVASILAKIS</option></select></label>
+<label><span id="monthLabel">Miesiąc</span><select id="month"><option value="ALL">Cały rok 2026</option></select></label>
+</div></section>
+<section class="panel stats"><div class="stat"><b id="count">0</b><span id="countLabel">Terminów</span></div><div class="stat"><b id="next">—</b><span id="nextLabel">Najbliższy termin</span></div><div class="stat"><b>2026</b><span id="yearLabel">Rok kalendarzowy</span></div></section>
+<div id="events"></div>
+<p class="note" id="legend">★ Termin przesunięty według oryginalnego kalendarza AWG. Wspólny termin Grünschnitt dotyczy wszystkich gospodarstw.</p>
+<p class="note">Źródło: dostarczony kalendarz AWG Wuppertal 2026, Sternstraße.</p>
+</main>
+<script>
+const residents={NIESLONY:2,WESTERMANN:1,CYRYL:0,KLADOVASILAKIS:3};
+const rows=[
+["2026-01-05","NIESLONY","Restmüll|Restmüll 50%|Gelbe Tonne"],
+["2026-01-12","NIESLONY","Restmüll|Biomüll|Weihnachtsbäume"],
+["2026-01-19","WESTERMANN","Restmüll|Restmüll 50%|Gelbe Tonne"],
+["2026-01-26","WESTERMANN","Restmüll|Biomüll|Altpapier"],
+["2026-02-02","CYRYL","Restmüll|Restmüll 50%|Gelbe Tonne"],
+["2026-02-09","CYRYL","Restmüll|Biomüll"],
+["2026-02-16","KLADOVASILAKIS","Restmüll|Restmüll 50%|Gelbe Tonne|Sperrmüll"],
+["2026-02-23","KLADOVASILAKIS","Restmüll|Altpapier"],
+["2026-03-02","NIESLONY","Restmüll|Restmüll 50%|Gelbe Tonne"],
+["2026-03-07","WSPÓLNY","Grünschnitt"],
+["2026-03-09","NIESLONY","Restmüll|Biomüll"],
+["2026-03-14","WSPÓLNY","Grünschnitt"],
+["2026-03-16","WESTERMANN","Restmüll|Restmüll 50%|Gelbe Tonne"],
+["2026-03-21","WSPÓLNY","Grünschnitt"],
+["2026-03-23","WESTERMANN","Restmüll|Altpapier"],
+["2026-03-28","CYRYL","Restmüll|Restmüll 50%|Gelbe Tonne",1],
+["2026-04-07","CYRYL","Restmüll|Biomüll",1],
+["2026-04-13","KLADOVASILAKIS","Restmüll|Restmüll 50%|Gelbe Tonne"],
+["2026-04-18","WSPÓLNY","Grünschnitt"],
+["2026-04-20","KLADOVASILAKIS","Restmüll|Altpapier"],
+["2026-04-25","WSPÓLNY","Grünschnitt"],
+["2026-04-27","NIESLONY","Restmüll|Restmüll 50%|Gelbe Tonne"],
+["2026-05-04","NIESLONY","Restmüll|Biomüll"],
+["2026-05-09","WSPÓLNY","Grünschnitt"],
+["2026-05-11","WESTERMANN","Restmüll|Restmüll 50%|Gelbe Tonne"],
+["2026-05-18","WESTERMANN","Restmüll|Altpapier|Sperrmüll"],
+["2026-05-26","CYRYL","Restmüll|Restmüll 50%|Gelbe Tonne",1],
+["2026-06-01","CYRYL","Restmüll|Biomüll"],
+["2026-06-08","KLADOVASILAKIS","Restmüll|Restmüll 50%|Gelbe Tonne"],
+["2026-06-15","KLADOVASILAKIS","Restmüll|Altpapier"],
+["2026-06-22","NIESLONY","Restmüll|Restmüll 50%|Gelbe Tonne"],
+["2026-06-29","NIESLONY","Restmüll|Biomüll"],
+["2026-07-06","WESTERMANN","Restmüll|Restmüll 50%|Gelbe Tonne"],
+["2026-07-13","WESTERMANN","Restmüll|Altpapier"],
+["2026-07-20","CYRYL","Restmüll|Restmüll 50%|Gelbe Tonne"],
+["2026-07-27","CYRYL","Restmüll|Biomüll"],
+["2026-08-03","KLADOVASILAKIS","Restmüll|Restmüll 50%|Gelbe Tonne"],
+["2026-08-10","KLADOVASILAKIS","Restmüll|Altpapier"],
+["2026-08-17","NIESLONY","Restmüll|Restmüll 50%|Gelbe Tonne"],
+["2026-08-24","NIESLONY","Restmüll|Biomüll|Sperrmüll"],
+["2026-08-31","WESTERMANN","Restmüll|Restmüll 50%|Gelbe Tonne"],
+["2026-09-07","WESTERMANN","Restmüll|Altpapier"],
+["2026-09-14","CYRYL","Restmüll|Restmüll 50%|Gelbe Tonne"],
+["2026-09-21","CYRYL","Restmüll|Biomüll"],
+["2026-09-28","KLADOVASILAKIS","Restmüll|Restmüll 50%|Gelbe Tonne"],
+["2026-10-05","KLADOVASILAKIS","Restmüll|Altpapier"],
+["2026-10-12","NIESLONY","Restmüll|Restmüll 50%|Gelbe Tonne"],
+["2026-10-17","WSPÓLNY","Grünschnitt"],
+["2026-10-19","NIESLONY","Restmüll|Biomüll"],
+["2026-10-24","WSPÓLNY","Grünschnitt"],
+["2026-10-26","WESTERMANN","Restmüll|Restmüll 50%|Gelbe Tonne"],
+["2026-10-31","WSPÓLNY","Grünschnitt"],
+["2026-11-02","WESTERMANN","Restmüll|Altpapier"],
+["2026-11-07","WSPÓLNY","Grünschnitt"],
+["2026-11-09","CYRYL","Restmüll|Restmüll 50%|Gelbe Tonne|Sperrmüll"],
+["2026-11-14","WSPÓLNY","Grünschnitt"],
+["2026-11-16","CYRYL","Restmüll|Biomüll"],
+["2026-11-21","WSPÓLNY","Grünschnitt"],
+["2026-11-23","KLADOVASILAKIS","Restmüll|Restmüll 50%|Gelbe Tonne"],
+["2026-11-30","KLADOVASILAKIS","Restmüll|Altpapier"],
+["2026-12-07","NIESLONY","Restmüll|Restmüll 50%|Gelbe Tonne"],
+["2026-12-14","NIESLONY","Restmüll|Biomüll"],
+["2026-12-19","WESTERMANN","Restmüll|Restmüll 50%|Gelbe Tonne",1],
+["2026-12-28","WESTERMANN","Restmüll|Altpapier"]
+];
+const pl={title:"Kalendarz wywozu odpadów",subtitle:"Terminy 2026 · wybierz gospodarstwo, aby zobaczyć własne odbiory",resident:"Gospodarstwo",all:"Wszystkie gospodarstwa",month:"Miesiąc",year:"Cały rok 2026",count:"Terminów",next:"Najbliższy termin",yearLabel:"Rok kalendarzowy",common:"Wspólny termin",floor:"Piętro",legend:"★ Termin przesunięty według oryginalnego kalendarza AWG. Wspólny termin Grünschnitt dotyczy wszystkich gospodarstw.",none:"Brak terminów dla wybranych filtrów.",months:["Styczeń","Luty","Marzec","Kwiecień","Maj","Czerwiec","Lipiec","Sierpień","Wrzesień","Październik","Listopad","Grudzień"],types:{"Restmüll":"Odpady zmieszane","Restmüll 50%":"Pojemnik 50%","Gelbe Tonne":"Żółty pojemnik","Biomüll":"Bioodpady","Altpapier":"Papier","Sperrmüll":"Odpady wielkogabarytowe","Weihnachtsbäume":"Choinki","Grünschnitt":"Odpady zielone"}};
+const de={title:"Abfallkalender",subtitle:"Termine 2026 · Haushalt auswählen, um die eigenen Abholungen zu sehen",resident:"Haushalt",all:"Alle Haushalte",month:"Monat",year:"Ganzes Jahr 2026",count:"Termine",next:"Nächster Termin",yearLabel:"Kalenderjahr",common:"Gemeinsamer Termin",floor:"Etage",legend:"★ Laut ursprünglichem AWG-Kalender verschobener Termin. Gemeinsame Grünschnitt-Termine gelten für alle Haushalte.",none:"Keine Termine für diese Filter.",months:["Januar","Februar","März","April","Mai","Juni","Juli","August","September","Oktober","November","Dezember"],types:{"Restmüll":"Restmüll","Restmüll 50%":"Restmüll 50%","Gelbe Tonne":"Gelbe Tonne","Biomüll":"Biomüll","Altpapier":"Altpapier","Sperrmüll":"Sperrmüll","Weihnachtsbäume":"Weihnachtsbäume","Grünschnitt":"Grünschnitt"}};
+let lang="pl";const $=id=>document.getElementById(id);
+function dateObj(s){return new Date(s+"T12:00:00")}
+function render(){const t=lang==="pl"?pl:de;document.documentElement.lang=lang;$("title").textContent=t.title;$("subtitle").textContent=t.subtitle;$("residentLabel").textContent=t.resident;$("monthLabel").textContent=t.month;$("countLabel").textContent=t.count;$("nextLabel").textContent=t.next;$("yearLabel").textContent=t.yearLabel;$("legend").textContent=t.legend;$("lang").textContent=lang==="pl"?"DE":"PL";
+const res=$("resident").value, mon=$("month").value;const list=rows.filter(r=>(res==="ALL"||r[1]===res||r[1]==="WSPÓLNY")&&(mon==="ALL"||Number(r[0].slice(5,7))===Number(mon)));
+$("count").textContent=list.length;const today=new Date();const upcoming=list.find(r=>dateObj(r[0])>=new Date(today.getFullYear(),today.getMonth(),today.getDate()));$("next").textContent=upcoming?dateObj(upcoming[0]).toLocaleDateString(lang==="pl"?"pl-PL":"de-DE",{day:"2-digit",month:"2-digit"}):"—";
+const groups={};list.forEach(r=>{const m=Number(r[0].slice(5,7))-1;(groups[m]??=[]).push(r)});let out="";
+Object.keys(groups).sort((a,b)=>a-b).forEach(m=>{out+=`<h2>${t.months[m]} 2026</h2><section class="panel">`;groups[m].forEach(r=>{const d=dateObj(r[0]);const who=r[1]==="WSPÓLNY"?t.common:r[1];const day=d.toLocaleDateString(lang==="pl"?"pl-PL":"de-DE",{weekday:"short"});const tags=r[2].split("|").map(x=>`<span class="tag ${x==="Grünschnitt"?"green":""}">${t.types[x]||x}</span>`).join("");out+=`<div class="event"><div class="date">${d.toLocaleDateString(lang==="pl"?"pl-PL":"de-DE",{day:"2-digit",month:"2-digit"})}${r[3]?" ★":""}<div class="weekday">${day}</div></div><div><div class="who">${who}</div><div class="floor">${r[1]==="WSPÓLNY"?"":t.floor+" "+residents[r[1]]}</div><div class="tags">${tags}</div></div></div>`});out+="</section>"});
+$("events").innerHTML=out||`<section class="panel empty">${t.none}</section>`;
+}
+pl.months.forEach((m,i)=>{const o=document.createElement("option");o.value=i+1;o.textContent=m; $("month").append(o)});
+$("lang").onclick=()=>{lang=lang==="pl"?"de":"pl";const t=lang==="pl"?pl:de;const sel=$("month");[...sel.options].forEach((o,i)=>{if(i>0)o.textContent=t.months[i-1]});$("resident").options[0].textContent=t.all;render()};
+$("resident").onchange=render;$("month").onchange=render;render();
+</script></body></html>
