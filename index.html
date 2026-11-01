@@ -229,7 +229,86 @@ h2{font-size:19px;margin:22px 0 10px}.event{display:grid;grid-template-columns:9
 .tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}.tag{font-size:12px;background:#26364d;color:#dce8f8;border-radius:20px;padding:4px 9px}.tag.green{background:#123d35;color:#a7f3d0}.tag.yellow{background:#4b3714;color:#fde68a}
 .note{color:var(--muted);font-size:13px;line-height:1.5}.empty{text-align:center;padding:25px;color:var(--muted)}
 @media(max-width:520px){.filters{grid-template-columns:1fr}.stats{grid-template-columns:repeat(3,1fr)}.event{grid-template-columns:78px 1fr}.panel{padding:13px}}
-</style></head>
+</style>/* VERSION 2.0 – PREMIUM DESIGN */
+
+.upcoming-card {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg,#123d43,#142b40 65%,#101b30);
+  border: 1px solid #277b70;
+  border-radius: 22px;
+  padding: 21px;
+  margin: 18px 0;
+  box-shadow: 0 10px 30px #0005;
+}
+
+.upcoming-card:after {
+  content: "♻️";
+  position: absolute;
+  right: 18px;
+  top: 20px;
+  font-size: 55px;
+  opacity: .16;
+}
+
+.upcoming-title {
+  color: #6ee7b7;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.upcoming-date {
+  font-size: 36px;
+  font-weight: 850;
+  margin: 10px 0;
+  color: white;
+}
+
+.upcoming-info {
+  color: #cbd5e1;
+  font-size: 14px;
+}
+
+.event {
+  transition: transform .2s, border-color .2s;
+}
+
+.event-next {
+  background: linear-gradient(90deg,#123b35,#142438);
+  border: 1px solid #277b70 !important;
+  border-radius: 14px;
+  padding: 15px !important;
+  margin: 5px 0;
+}
+
+.tag {
+  padding: 7px 11px;
+  font-size: 12px;
+  font-weight: 600;
+  transition: .2s;
+}
+
+.tag:hover {
+  transform: translateY(-2px);
+}
+
+button, select {
+  transition: all .2s ease;
+}
+
+button:active {
+  transform: scale(.97);
+}
+
+.stat {
+  transition: transform .2s;
+}
+
+.stat:hover {
+  transform: translateY(-3px);
+}
 <body><main>
 <div class="top"><div><div style="color:#60a5fa;font-weight:700;letter-spacing:.08em;font-size:12px">AWG WUPPERTAL · STERNSTRASSE</div><h1 id="title">Kalendarz wywozu odpadów</h1></div><button id="lang">DE</button></div>
 <p class="sub" id="subtitle">Terminy 2026 · wybierz gospodarstwo, aby zobaczyć własne odbiory</p>
@@ -313,8 +392,20 @@ const rows=[
 const pl={title:"Kalendarz wywozu odpadów",subtitle:"Terminy 2026 · wybierz gospodarstwo, aby zobaczyć własne odbiory",resident:"Gospodarstwo",all:"Wszystkie gospodarstwa",month:"Miesiąc",year:"Cały rok 2026",count:"Terminów",next:"Najbliższy termin",yearLabel:"Rok kalendarzowy",common:"Wspólny termin",floor:"Piętro",legend:"★ Termin przesunięty według oryginalnego kalendarza AWG. Wspólny termin Grünschnitt dotyczy wszystkich gospodarstw.",none:"Brak terminów dla wybranych filtrów.",months:["Styczeń","Luty","Marzec","Kwiecień","Maj","Czerwiec","Lipiec","Sierpień","Wrzesień","Październik","Listopad","Grudzień"],types:{"Restmüll":"Odpady zmieszane","Restmüll 50%":"Pojemnik 50%","Gelbe Tonne":"Żółty pojemnik","Biomüll":"Bioodpady","Altpapier":"Papier","Sperrmüll":"Odpady wielkogabarytowe","Weihnachtsbäume":"Choinki","Grünschnitt":"Odpady zielone"}};
 const de={title:"Abfallkalender",subtitle:"Termine 2026 · Haushalt auswählen, um die eigenen Abholungen zu sehen",resident:"Haushalt",all:"Alle Haushalte",month:"Monat",year:"Ganzes Jahr 2026",count:"Termine",next:"Nächster Termin",yearLabel:"Kalenderjahr",common:"Gemeinsamer Termin",floor:"Etage",legend:"★ Laut ursprünglichem AWG-Kalender verschobener Termin. Gemeinsame Grünschnitt-Termine gelten für alle Haushalte.",none:"Keine Termine für diese Filter.",months:["Januar","Februar","März","April","Mai","Juni","Juli","August","September","Oktober","November","Dezember"],types:{"Restmüll":"Restmüll","Restmüll 50%":"Restmüll 50%","Gelbe Tonne":"Gelbe Tonne","Biomüll":"Biomüll","Altpapier":"Altpapier","Sperrmüll":"Sperrmüll","Weihnachtsbäume":"Weihnachtsbäume","Grünschnitt":"Grünschnitt"}};
 let lang="pl";const $=id=>document.getElementById(id);
-function dateObj(s){return new Date(s+"T12:00:00")}
-function render(){const t=lang==="pl"?pl:de;document.documentElement.lang=lang;$("title").textContent=t.title;$("subtitle").textContent=t.subtitle;$("residentLabel").textContent=t.resident;$("monthLabel").textContent=t.month;$("countLabel").textContent=t.count;$("nextLabel").textContent=t.next;$("yearLabel").textContent=t.yearLabel;$("legend").textContent=t.legend;$("lang").textContent=lang==="pl"?"DE":"PL";
+ function dateObj(s){return new Date(s+"T12:00:00")}
+function render() function wasteIcon(type) {
+  const icons = {
+    "Restmüll": "🗑️",
+    "Restmüll 50%": "♻️",
+    "Gelbe Tonne": "🟡",
+    "Biomüll": "🍃",
+    "Altpapier": "📦",
+    "Sperrmüll": "🛋️",
+    "Weihnachtsbäume": "🎄",
+    "Grünschnitt": "🌿"
+  };
+  return icons[type] || "♻️";
+}{const t=lang==="pl"?pl:de;document.documentElement.lang=lang;$("title").textContent=t.title;$("subtitle").textContent=t.subtitle;$("residentLabel").textContent=t.resident;$("monthLabel").textContent=t.month;$("countLabel").textContent=t.count;$("nextLabel").textContent=t.next;$("yearLabel").textContent=t.yearLabel;$("legend").textContent=t.legend;$("lang").textContent=lang==="pl"?"DE":"PL";
 const res=$("resident").value, mon=$("month").value;const list=rows.filter(r=>(res==="ALL"||r[1]===res||r[1]==="WSPÓLNY")&&(mon==="ALL"||Number(r[0].slice(5,7))===Number(mon)));
 $("count").textContent=list.length;const today=new Date();const upcoming=list.find(r=>dateObj(r[0])>=new Date(today.getFullYear(),today.getMonth(),today.getDate()));$("next").textContent=upcoming?dateObj(upcoming[0]).toLocaleDateString(lang==="pl"?"pl-PL":"de-DE",{day:"2-digit",month:"2-digit"}):"—";
 const groups={};list.forEach(r=>{const m=Number(r[0].slice(5,7))-1;(groups[m]??=[]).push(r)});let out="";
