@@ -5,7 +5,217 @@
 <meta name="theme-color" content="#101827">
 <title>Waste Collection Calendar · Sternstraße 2026</title>
 <style>
-  :root{--bg:#0b1220;--panel:#131e30;--line:#28364b;
+
+:root {
+  --bg: #071522;
+  --panel: #102438;
+  --line: #24445a;
+  --text: #f0fdfa;
+  --muted: #9bb8c8;
+  --blue: #38bdf8;
+  --green: #34d399;
+  --yellow: #fbbf24;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background:
+    radial-gradient(ellipse at top left, #123b4a 0%, transparent 45%),
+    linear-gradient(145deg, #071522, #091827 60%, #06111d);
+  color: var(--text);
+  font: 16px system-ui, -apple-system, Segoe UI, sans-serif;
+}
+
+main {
+  max-width: 900px;
+  margin: auto;
+  padding: 28px 16px 60px;
+}
+
+.top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+h1 {
+  font-size: clamp(26px, 5vw, 39px);
+  margin: 8px 0;
+  font-weight: 800;
+  letter-spacing: -1px;
+}
+
+.sub {
+  color: var(--muted);
+  margin: 0 0 24px;
+}
+
+button, select {
+  background: #18364b;
+  color: var(--text);
+  border: 1px solid #31566b;
+  border-radius: 13px;
+  padding: 12px 15px;
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+  transition: .2s;
+}
+
+button:hover {
+  background: #20516a;
+  border-color: var(--green);
+}
+
+.active {
+  background: #087f70;
+  border-color: var(--green);
+}
+
+.panel {
+  background: linear-gradient(145deg, #132d41, #102337);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  padding: 18px;
+  margin: 15px 0;
+  box-shadow: 0 8px 25px #00000025;
+}
+
+.filters {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 13px;
+}
+
+.filters label {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.filters select {
+  width: 100%;
+  margin-top: 7px;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.stat {
+  background: #0a1b2b;
+  border: 1px solid #23475a;
+  border-radius: 16px;
+  padding: 15px 10px;
+}
+
+.stat b {
+  font-size: 25px;
+  display: block;
+  color: var(--green);
+}
+
+.stat span {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+h2 {
+  font-size: 20px;
+  margin: 25px 0 12px;
+  color: #67e8c0;
+}
+
+.event {
+  display: grid;
+  grid-template-columns: 90px 1fr;
+  gap: 13px;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.event:last-child {
+  border: 0;
+}
+
+.date {
+  font-weight: 800;
+  color: var(--blue);
+  font-size: 17px;
+}
+
+.weekday {
+  font-size: 12px;
+  color: var(--muted);
+  font-weight: 500;
+}
+
+.who {
+  font-weight: 750;
+  color: #f0fdfa;
+}
+
+.floor {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.tags {
+  display: flex;
+  gap: 7px;
+  flex-wrap: wrap;
+  margin-top: 9px;
+}
+
+.tag {
+  font-size: 12px;
+  background: #24445c;
+  color: #dbeafe;
+  border-radius: 20px;
+  padding: 6px 11px;
+  border: 1px solid #315b70;
+}
+
+.tag.green {
+  background: #104b3d;
+  color: #a7f3d0;
+  border-color: #19765b;
+}
+
+.tag.yellow {
+  background: #514019;
+  color: #fde68a;
+}
+
+.note {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.empty {
+  text-align: center;
+  padding: 28px;
+  color: var(--muted);
+}
+
+@media(max-width:520px) {
+  main { padding: 20px 12px 45px; }
+  .filters { grid-template-columns: 1fr; }
+  .stats { gap: 7px; }
+  .stat { padding: 12px 7px; }
+  .stat b { font-size: 22px; }
+  .event { grid-template-columns: 75px 1fr; }
+  .panel { padding: 14px; }
+}
+
 :root{--bg:#0b1220;--panel:#131e30;--line:#28364b;--text:#eef4ff;--muted:#9aabc2;--blue:#60a5fa;--green:#34d399;--yellow:#fbbf24}
 *{box-sizing:border-box}body{margin:0;background:linear-gradient(160deg,#111d31,#090f1b 55%);color:var(--text);font:16px system-ui,-apple-system,Segoe UI,sans-serif}
 main{max-width:900px;margin:auto;padding:24px 16px 60px}.top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
